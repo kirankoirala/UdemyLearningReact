@@ -17,22 +17,29 @@ class App extends Component {
         this.state = {
             selectedVideo: null,
             videos: [],
+            loadingCars:false,
             cars: []
-        }
+        };
 
         //this.getCars();
 
         this.getYoutubeVideos();
     }
 
-
-    // getCars() {
-    //    return fetch('http://localhost:58475/api/cars', { mode: 'no-cors' })
-    //         .then(response => response.json)
-    //         .then(data => {
-    //             this.setState({ cars: data });
-    //         });
+    // componentDidMount() {
+    //     fetch('http://localhost:58475/api/cars', { mode: 'no-cors' })
+    //         .then(response => response)
+    //         .then(data => this.setState({ cars: data }));
     // }
+
+    componentDidMount() {
+        fetch("http://localhost:58475/api/cars", {headers: new Headers({
+            "mode": 'no-cors',
+            "Accept": "application/json"    })})
+            .then(response => response.json())
+            .then(carList => this.setState({cars: carList}))
+            .catch(error => console.log(error))
+      }
 
     getYoutubeVideos() {
         YTSearch({ key: API_KEY_YOU_TUBE, term: 'nepali' }, (videos) => {
@@ -46,10 +53,10 @@ class App extends Component {
     render () {
     return (
         <div>
-             {/* <p>Rendering cars...</p>
+             <p>Rendering cars...</p>
             <p>cars: {this.state.cars.length}
-                {this.state.cars}
-            </p>  */}
+                {this.state.cars.Name}
+            </p>  
 
             <SearchBar />
             <VideoDetail video={this.state.selectedVideo}/>
