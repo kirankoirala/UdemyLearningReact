@@ -3,10 +3,9 @@ import React from "react";
 const videoDetail = ({video}) => {
 
     if (!video){
-        return <div>Loading....</div>
+        return <div>Loading...</div>
     }
     const videoId = video.id.videoId;
-    console.log(videoId);
     const url = `https://www.youtube.com/embed/${videoId}`;
 
     return (

@@ -14,19 +14,52 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {videos: []}
+        this.state = {
+            selectedVideo: null,
+            videos: [],
+            cars: []
+        }
 
-        YTSearch({key:API_KEY_YOU_TUBE, term: 'hindi movie'}, (videos)=>{
-            this.setState({videos}); //only works if key and values are the same name
+        //this.getCars();
+
+        this.getYoutubeVideos();
+    }
+
+
+    // getCars() {
+    //    return fetch('http://localhost:58475/api/cars', { mode: 'no-cors' })
+    //         .then(response => response.json)
+    //         .then(data => {
+    //             this.setState({ cars: data });
+    //         });
+    // }
+
+    getYoutubeVideos() {
+        YTSearch({ key: API_KEY_YOU_TUBE, term: 'nepali' }, (videos) => {
+            this.setState({
+                videos: videos,
+                selectedVideo: videos[0]
+            });
         });
     }
 
     render () {
     return (
         <div>
+             {/* <p>Rendering cars...</p>
+            <p>cars: {this.state.cars.length}
+                {this.state.cars}
+            </p>  */}
+
             <SearchBar />
-            <VideoDetail video={this.state.videos[0]}/>
-            <VideoList videos = {this.state.videos} />
+            <VideoDetail video={this.state.selectedVideo}/>
+            <VideoList
+                onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+                videos = {this.state.videos} 
+            />
+            
+            
+
         </div>
         );  
     }
