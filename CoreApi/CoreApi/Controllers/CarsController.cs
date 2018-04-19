@@ -17,9 +17,9 @@ namespace CoreApi.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            var result = Json(new[] { new car { Name = "BMW" }, new car { Name = "Acura" } });
-            result.ContentType = "application/json";
-            return result;
+            var cars = Json(new[] { new car { Name = "BMW" }, new car { Name = "Acura" } });
+            cars.ContentType = "application/json";
+            return cars;
         }
 
         // GET: api/Cars/5

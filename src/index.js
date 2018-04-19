@@ -18,7 +18,8 @@ class App extends Component {
             selectedVideo: null,
             videos: [],
             loadingCars:false,
-            cars: []
+            cars: [],
+            error:''
         };
 
         //this.getCars();
@@ -26,18 +27,17 @@ class App extends Component {
         this.getYoutubeVideos();
     }
 
-    // componentDidMount() {
-    //     fetch('http://localhost:58475/api/cars', { mode: 'no-cors' })
-    //         .then(response => response)
-    //         .then(data => this.setState({ cars: data }));
-    // }
-
     componentDidMount() {
-        fetch("http://localhost:58475/api/cars", {headers: new Headers({
-            "mode": 'no-cors',
-            "Accept": "application/json"    })})
-            .then(response => response.json())
-            .then(carList => this.setState({cars: carList}))
+        fetch("http://localhost:58476/api/cars", 
+             {method:'GET',
+                "mode": 'no-cors',
+                "Access-Control-Allow-Origin":"*",
+                "Content-Type": "application/json"    })
+            .then(response => response.json)
+            .then(carList => this.setState({
+                loadingCars:true,
+                cars: carList
+            }))
             .catch(error => console.log(error))
       }
 
@@ -54,6 +54,8 @@ class App extends Component {
     return (
         <div>
              <p>Rendering cars...</p>
+             <p> Error...{this.state.error}</p>
+             <p>isLoaded:{this.state.loadingCars}</p>
             <p>cars: {this.state.cars.length}
                 {this.state.cars.Name}
             </p>  
